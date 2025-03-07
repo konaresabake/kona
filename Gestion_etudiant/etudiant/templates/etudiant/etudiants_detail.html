@@ -1,101 +1,76 @@
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Détails des étudiants</title>
+    <title>Détails de l'étudiant</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            background-color: #f4f4f9;
             margin: 0;
             padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 300px;
+            text-align: center;
         }
 
         h1 {
-            text-align: center;
-            padding: 20px;
-            background-color: #2c3e50;
-            color: white;
-            margin: 0;
-        }
-
-        .card {
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            max-width: 800px;
-            margin: 40px auto;
-            padding: 20px;
-        }
-
-        .card-header {
-            background-color: #3498db;
-            color: white;
-            padding: 15px;
-            text-align: center;
-        }
-
-        .card-body {
-            padding: 20px;
-        }
-
-        .card-body h2 {
-            font-size: 2rem;
+            color: #333;
+            font-size: 24px;
             margin-bottom: 15px;
         }
 
-        .card-body p {
-            font-size: 1.2rem;
-            color: #7f8c8d;
-            margin-bottom: 20px;
-        }
-
-        .card-footer {
-            text-align: center;
-            padding: 10px;
-            background-color: #ecf0f1;
-        }
-
-        .back-button {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #3498db;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 5px;
-            text-align: center;
+        p {
+            color: #555;
             font-size: 16px;
+            margin: 10px 0;
         }
 
-        .back-button:hover {
-            background-color: #2980b9;
+        p strong {
+            color: #333;
+        }
+
+        a {
+            display: inline-block;
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-top: 20px;
+        }
+
+        a:hover {
+            background-color: #0056b3;
+        }
+
+        .status {
+            font-weight: bold;
+            color: #28a745; /* Green color for "OUI" */
+        }
+
+        .status.no {
+            color: #dc3545; /* Red color for "NON" */
         }
     </style>
 </head>
 <body>
-    <h1>Détails des étudiants</h1>
-
-    <div class="card">
-        <div class="card-header">
-            <h2>{{ etudiant.prenom }} {{ etudiant.nom }}</h2>
-        </div>
-        <div class="card-body">
-            <p><strong>Métier : </strong>{{ etudiant.metiers }}</p>
-            <p><strong>Âge : </strong>{{ etudiant.age }} ans</p>
-            {% if etudiant.est_inscrit %}
-                <p><strong>Inscrit : </strong>OUI</p>
-            {% else %}
-                <p><strong>Inscrit : </strong>NON</p>
-            {% endif %}
-        </div>
-        
-        <div class="card-footer">
-            <small>Publié le {{ etudiant.created_at }}</small>
-        </div>
+    <div class="container">
+        <h1>{{ etudiant.prenom }} {{ etudiant.nom }}</h1>
+        <p><strong>Métier:</strong> {{ etudiant.metiers }}</p>
+        <p><strong>Âge:</strong> {{ etudiant.age }} ans</p>
+        <p><strong>Inscrit:</strong> <span class="status {% if not etudiant.est_inscrit %}no{% endif %}">{% if etudiant.est_inscrit %}OUI{% else %}NON{% endif %}</span></p>
+        <a href="{% url 'liste_etudiants' %}">Retour</a>
     </div>
-
-    <a href="{% url 'etudiants' %}" class="back-button">Retour à la liste</a>
 </body>
-</html> -->
+</html>

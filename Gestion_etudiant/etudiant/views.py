@@ -5,7 +5,7 @@ from .models import Etudiant
 from .forms import EtudiantForm
 
 
-def etudiants(request):
+def liste_etudiants(request):
 
     etudiants = Etudiant.objects.all().order_by('-created_at')
 
@@ -13,12 +13,9 @@ def etudiants(request):
 
 # Create your views here.
 
-def details_etudiant(request,id):
-    etudiants = get_object_or_404(Etudiant,id = id)
-    print(etudiants)
-
-    return render(request, 'etudiant/etudiants_detail.html', {'details_etudiant': details_etudiant})
-
+def details_etudiant(request, id):
+    etudiant = Etudiant.objects.get(id=id)
+    return render(request, 'etudiant/etudiants_detail.html', {'etudiant': etudiant})
 
 
 def index(request):
@@ -32,7 +29,7 @@ def ajouter_etudiant(request):
         form = EtudiantForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('etudiants') 
+            return redirect('liste_etudiants') 
     else:
         form = EtudiantForm()
 
@@ -45,16 +42,16 @@ def modifier_etudiant(request, id):
         form = EtudiantForm(request.POST, instance=etudiant)
         if form.is_valid():
             form.save()
-            return redirect('etudiants')  # Rediriger vers la liste des étudiants
+            return redirect('liste_etudiants')  # Rediriger vers la liste des étudiants
     else:
         form = EtudiantForm(instance=etudiant)
-    return render(request, 'etudiants/modifier_etudiant.html', {'form': form})
+    return render(request, 'etudiant/modifier_etudiant.html', {'form': form})
 
 
 
 def supprimer_etudiant(request, id):
     etudiant = get_object_or_404(Etudiant, id=id)
     etudiant.delete()
-    return redirect('etudiants')  # Rediriger vers la liste des étudiants
+    return redirect('liste_etudiants')  # Rediriger vers la liste des étudiants
 
 

@@ -2,13 +2,12 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Liste des étudiants</title>
     <style>
-        /* Styles de base */
+        /* Style général de la page */
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f4f4f4;
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fa;
             margin: 0;
             padding: 0;
             display: flex;
@@ -16,118 +15,106 @@
             align-items: center;
         }
 
-        /* Titre principal */
+        /* Titre de la page */
         h1 {
-            text-align: center;
-            color: #2c3e50;
+            color: #333;
+            margin-top: 50px;
+            font-size: 2.5em;
+        }
+
+        /* Liste des étudiants */
+        ul {
+            list-style-type: none;
+            padding: 0;
+            width: 80%;
+            max-width: 600px;
             margin-top: 20px;
         }
 
-        /* Container de la liste d'étudiants */
-        .container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
-            padding: 20px;
-            width: 100%;
-            max-width: 1200px;
-        }
-
-        /* Style de la carte */
-        .card {
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            padding: 20px;
-            text-align: center;
-            transition: transform 0.3s ease-in-out;
-        }
-
-        .card:hover {
-            transform: translateY(-10px);
-        }
-
-        /* Image de la carte (si nécessaire) */
-        .card img {
-            width: 100%;
-            height: auto;
+        li {
+            background-color: #fff;
+            margin: 10px 0;
+            padding: 15px;
             border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
         }
 
-        /* Titre de la carte */
-        .card h2 {
-            font-size: 1.5rem;
-            color: #34495e;
-            margin-bottom: 10px;
+        li:hover {
+            background-color: #f1f1f1;
+            transform: translateY(-2px);
         }
 
-        /* Détails de l'étudiant */
-        .card p {
-            font-size: 1rem;
-            color: #7f8c8d;
-            margin: 8px 0;
-        }
-
-        /* Bouton de retour */
-        .back-button {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #3498db;
-            color: white;
+        /* Liens de chaque étudiant */
+        a {
+            color: #007BFF;
             text-decoration: none;
+            margin: 0 10px;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: #0056b3;
+        }
+
+        /* Bouton Ajouter un étudiant */
+        .ajouter-btn {
+            background-color: #28a745;
+            color: white;
+            padding: 12px 20px;
             border-radius: 5px;
-            margin-top: 10px;
-            font-size: 14px;
+            text-decoration: none;
+            font-size: 1.2em;
+            margin-top: 30px;
+            transition: background-color 0.3s ease;
         }
 
-        .back-button:hover {
-            background-color: #2980b9;
+        .ajouter-btn:hover {
+            background-color: #218838;
         }
 
-        /* Plus de détails */
-        .details-button {
-            display: inline-block;
+        /* Style pour les liens "Modifier" et "Supprimer" */
+        .modifier-btn, .supprimer-btn {
+            background-color: #ffc107;
+            color: white;
             padding: 8px 15px;
-            background-color: #2ecc71;
-            color: white;
-            text-decoration: none;
             border-radius: 5px;
-            font-size: 14px;
-            margin-top: 10px;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
         }
 
-        .details-button:hover {
-            background-color: #27ae60;
+        .modifier-btn:hover {
+            background-color: #e0a800;
         }
 
+        .supprimer-btn {
+            background-color: #dc3545;
+        }
+
+        .supprimer-btn:hover {
+            background-color: #c82333;
+        }
     </style>
 </head>
 <body>
-
-    <h1>Liste des Étudiants</h1>
-
-    <div class="container">
+    <h1>Liste des étudiants</h1>
+    <ul>
         {% for etudiant in etudiants %}
-        <div class="card">
-            <h2>{{ etudiant.prenom }} {{ etudiant.nom }}</h2>
-            <p><strong>Métier:</strong> {{ etudiant.metiers }}</p>
-            <p><strong>Âge:</strong> {{ etudiant.age }} ans</p>
-
-            {% if etudiant.est_inscrit %}
-                <p><strong>Inscrit:</strong> OUI</p>
-            {% else %}
-                <p><strong>Inscrit:</strong> NON</p>
-            {% endif %}
-            
-            <p><small>Publié le {{ etudiant.created_at }}</small></p>
-
-            <a href="{% url 'details_etudiant' id=etudiant.id %}" class="details-button">Voir plus</a>
-        </div>
+        <li>
+            <div>
+                <a href="{% url 'details_etudiant' id=etudiant.id %}">{{ etudiant.prenom }} {{ etudiant.nom }}</a>
+            </div>
+            <div>
+                <a href="{% url 'modifier_etudiant' id=etudiant.id %}" class="modifier-btn">Modifier</a>
+                <a href="{% url 'supprimer_etudiant' id=etudiant.id %}" class="supprimer-btn">Supprimer</a>
+            </div>
+        </li>
         {% endfor %}
-    </div>
-
-    <a href="{% url 'ajouter_etudiant' %}" class="back-button">Retour</a>
-
+    </ul>
+    <a href="{% url 'ajouter_etudiant' %}" class="ajouter-btn">Ajouter un étudiant</a>
 </body>
 </html>
