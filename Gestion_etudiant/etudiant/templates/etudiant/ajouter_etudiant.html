@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajouter un étudiant</title>
+    <style>
+        /* Style de base pour le body */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Style de l'élément container */
+        .container {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        /* Titre principal */
+        h1 {
+            text-align: center;
+            font-size: 24px;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        /* Style des labels et des champs de formulaire */
+        label {
+            font-size: 16px;
+            color: #34495e;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input[type="text"], input[type="number"], input[type="checkbox"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-size: 16px;
+            color: #34495e;
+        }
+
+        input[type="checkbox"] {
+            width: auto;
+            margin-bottom: 0;
+        }
+
+        /* Style pour le bouton de soumission */
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        /* Style du formulaire */
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Espacement entre les champs du formulaire */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group input[type="checkbox"] {
+            width: auto;
+            margin-right: 10px;
+        }
+
+        /* Petit texte sous le bouton */
+        .note {
+            text-align: center;
+            font-size: 14px;
+            color: #7f8c8d;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Ajouter un étudiant</h1>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="id_prenom">Prénom</label>
+                {{ form.prenom }}
+            </div>
+
+            <div class="form-group">
+                <label for="id_nom">Nom</label>
+                {{ form.nom }}
+            </div>
+
+            <div class="form-group">
+                <label for="id_metiers">Métier</label>
+                {{ form.metiers }}
+            </div>
+
+            <div class="form-group">
+                <label for="id_age">Âge</label>
+                {{ form.age }}
+            </div>
+
+            <div class="form-group">
+                <label for="id_est_inscrit">Inscrit</label>
+                {{ form.est_inscrit }}
+            </div>
+
+            <button type="submit">Ajouter</button>
+        </form>
+<a href="{% url 'etudiants' %}">liste des etudiants</a>
+    </div>
+</body>
+</html>
